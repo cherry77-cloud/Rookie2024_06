@@ -1,10 +1,30 @@
 1.  Go 语言中常用的环境变量及其详细说明，涵盖模块管理、编译构建、测试调试
 ◼ 一、核心配置
-    ● GOROOT -> Go 的安装路径(存放编译器、标准库), 例如 /usr/local/go 或 C:\Go
-    ● GOPATH -> 工作目录(存放代码、依赖、二进制文件，默认 ~/go 或 %USERPROFILE%\go), 例如 ~/mygo
-    ● GOBIN -> go install 安装的二进制文件存放路径, 例如 $GOPATH/bin
+    ● GOROOT -> Go 的安装路径(存放编译器、标准库)
+    ● GOPATH -> 工作目录(存放代码、依赖、二进制文件，默认 ~/go 或 %USERPROFILE%\go)
+    ● GOBIN -> go install 安装的二进制文件存放路径
 ◼ 二、模块管理(Go Modules)
     ● GO111MODULE -> 控制 Go Modules 模式：on(强制启用)、off(禁用)、auto(自动)
-    ● GOPROXY -> 模块代理服务器地址(加速依赖下载), 例如 https://goproxy.cn,direct
-    ● GOPRIVATE -> 私有模块路径(不通过代理和校验数据库), 例如 *.corp.com,github.com/myorg/*
-    ● GONOPROXY -> 指定不通过代理下载的模块路径, 例如 *.corp.com
+    ● GOPROXY -> 模块代理服务器地址(加速依赖下载)
+    ● GOPRIVATE -> 私有模块路径(不通过代理和校验数据库)
+    ● GONOPROXY -> 指定不通过代理下载的模块路径
+    ● GONOSUMDB	-> 指定不校验哈希的模块路径
+    ● GOSUMDB -> 校验和数据库地址(默认 sum.golang.org)
+    ● GOINSECURE ->	允许通过 HTTP 下载的模块路径
+◼ 三、编译构建
+    ● GOOS -> 目标操作系统(交叉编译)
+    ● GOARCH -> 目标 CPU 架构(交叉编译)
+    ● CGO_ENABLED -> 是否启用 CGO(1 启用，0 禁用)
+    ● CC/CXX -> 指定 C/C++ 编译器(用于 CGO)
+    ● GOEXE	-> 指定生成的可执行文件后缀(如 Windows 的 .exe)
+    ● GOMODCACHE -> 模块缓存目录(存放下载的依赖包)
+◼ 四、测试与调试
+    ● GOFLAGS -> 为 go 命令设置默认参数
+    ● GODEBUG -> 启用调试功能(如内存、GC 行为)
+    ● GOTRACEBACK -> 控制程序崩溃时的堆栈信息级别
+    ● GOTESTTIMEOUT -> 设置测试超时时间(Go 1.20+)
+◼ 五、其他实用变量
+    ● GOMAXPROCS -> 设置程序可用的最大 CPU 核心数
+    ● GOWORK -> 启用工作区模式(多模块开发，Go 1.18+)
+    ● GOTOOLCHAIN -> 指定使用的 Go 工具链版本
+    ● GO_EXTLINK_ENABLED -> 控制是否使用外部链接器(CGO)
