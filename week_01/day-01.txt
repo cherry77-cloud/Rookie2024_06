@@ -1,10 +1,10 @@
 1.  Go 语言中常用的环境变量及其详细说明，涵盖模块管理、编译构建、测试调试
 ◼ 一、核心配置
-    ● GOROOT	        Go 的安装路径（存放编译器、标准库）	                                   /usr/local/go 或 C:\Go
-    ● GOPATH	        工作目录(存放代码、依赖、二进制文件，默认 ~/go 或 %USERPROFILE%\go)	     ~/mygo
-    ● GOBIN	          go install 安装的二进制文件存放路径	                                   $GOPATH/bin
+    ● GOROOT -> Go 的安装路径(存放编译器、标准库), 例如 /usr/local/go 或 C:\Go
+    ● GOPATH -> 工作目录(存放代码、依赖、二进制文件，默认 ~/go 或 %USERPROFILE%\go), 例如 ~/mygo
+    ● GOBIN -> go install 安装的二进制文件存放路径, 例如 $GOPATH/bin
 ◼ 二、模块管理(Go Modules)
-    ● GO111MODULE	    控制 Go Modules 模式：on（强制启用）、off（禁用）、auto（自动）	         on
-    ● GOPROXY	        模块代理服务器地址(加速依赖下载)                                        https://goproxy.cn,direct
-    ● GOPRIVATE	      私有模块路径(不通过代理和校验数据库)                                    *.corp.com,github.com/myorg/*
-    ● GONOPROXY	      指定不通过代理下载的模块路径	                                           *.corp.com
+    ● GO111MODULE -> 控制 Go Modules 模式：on(强制启用)、off(禁用)、auto(自动)
+    ● GOPROXY -> 模块代理服务器地址(加速依赖下载), 例如 https://goproxy.cn,direct
+    ● GOPRIVATE -> 私有模块路径(不通过代理和校验数据库), 例如 *.corp.com,github.com/myorg/*
+    ● GONOPROXY -> 指定不通过代理下载的模块路径, 例如 *.corp.com
