@@ -10,7 +10,7 @@
     ● GONOPROXY -> 指定不通过代理下载的模块路径
     ● GONOSUMDB	-> 指定不校验哈希的模块路径
     ● GOSUMDB -> 校验和数据库地址(默认 sum.golang.org)
-    ● GOINSECURE ->	允许通过 HTTP 下载的模块路径
+    ● GOINSECURE -> 允许通过 HTTP 下载的模块路径
 ◼ 三、编译构建
     ● GOOS -> 目标操作系统(交叉编译)
     ● GOARCH -> 目标 CPU 架构(交叉编译)
