@@ -46,3 +46,25 @@
     ● go clean => 清理编译生成的文件(如可执行文件、临时文件)
     ● go env => 查看所有 Go 环境变量
     ● go version => 查看 Go 版本
+
+
+3. Go 语言的核心优势
+◼ 直接编译为机器码，无运行时依赖
+    ● 静态编译: Go代码直接编译成机器码(如Linux的ELF、Windows的PE格式)，无需虚拟机或解释器
+    ● 单一二进制文件: 所有依赖(包括标准库和第三方包)被打包到最终的可执行文件中，部署时无需安装额外环境
+    ● 跨平台支持: 通过GOOS和GOARCH环境变量，可轻松编译不同操作系统和架构的程序
+◼ 高效的并发模型：Goroutine与调度器
+    ● Goroutine: 轻量级线程(协程)，初始栈大小仅2KB(线程通常为1-2MB)，可轻松创建百万级并发
+    ● GMP调度模型: Goroutine -> 用户态协程, Machine -> 操作系统线程, Processor -> 逻辑处理器，负责调度Goroutine到线程
+    ● 非阻塞异步IO: 基于epoll(Linux)或kqueue(BSD)的高效网络模型，避免线程切换开销
+◼ 高效且低延迟的垃圾回收（GC）
+    ● 并发标记清除算法: Go的GC在大多数阶段与用户代码并发执行，减少停顿时间
+    ● 三色标记法: 通过白、灰、黑三色标记对象，精准追踪存活对象
+◼ 简洁的语法与极低的学习成本
+    ● 25 个关键字: Go语言仅有25个保留关键字，语法简洁易学。
+    ● 代码规范统一: 强制使用gofmt格式化代码，消除风格争议。
+        break     default      func     interface  select
+        case      defer        go       map        struct
+        chan      else         goto     package    switch
+        const     fallthrough  if       range      type
+        continue  for          import   return     var
