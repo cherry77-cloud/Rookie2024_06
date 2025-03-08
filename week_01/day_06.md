@@ -26,3 +26,34 @@ Types:       int  int8  int16  int32  int64
 Functions:   make  len  cap  new  append  copy  close  delete
              complex  real  imag panic  recover
 ```
+
+#### 变量系统
+```go
+// 标准声明
+var count int
+var name string
+
+// 批量声明
+var (
+    age int
+    score float32
+    isActive bool
+)
+
+// 初始化特性
+var a int           // 默认值 0
+var s = "hello"     // 类型推导
+var x, y = 1, true  // 多重初始化
+
+// 短声明方式（函数内部）
+func main() {
+    width := 100          // 自动推断为int
+    title := "Go Handbook" // 自动推断为string
+}
+
+// 匿名变量机制
+func getData() (int, string) {
+    return 2023, "Success"
+}
+year, _ := getData()  // 忽略状态信息
+```
