@@ -14,7 +14,7 @@ const    fallthrough  if      range      type
 continue for          import  return     var
 ```
 
-#### 保留字列表
+#### 保留字列表 (37个)
 ```go
 Constants:   true  false  iota  nil
 
@@ -59,4 +59,21 @@ func getData() (int, string) {
     return 2023, "Success"
 }
 year, _ := getData()  // 忽略状态信息
+```
+
+#### 常量系统
+- 相对于变量，常量是恒定不变的值，多用于定义程序运行期间不会改变的那些值。 常量的声明和变量声明非常类似，只是把`var`换成了`const`，常量在定义的时候必须赋值。
+- `const`同时声明多个常量时，如果省略了值则表示和上面一行的值相同。
+```go
+const PI = 3.1415926
+const (
+    VERSION = "1.0"
+    MAX_CONN = 1000
+)
+
+const (
+    n1 = 100
+    n2
+    n3
+)
 ```
