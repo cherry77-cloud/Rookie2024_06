@@ -1,9 +1,9 @@
 1.  Go 语言中常用的环境变量及其详细说明，涵盖模块管理、编译构建、测试调试
-◼ 一、核心配置
+◼ 核心配置
     ● GOROOT -> Go 的安装路径(存放编译器、标准库)
     ● GOPATH -> 工作目录(存放代码、依赖、二进制文件，默认 ~/go 或 %USERPROFILE%\go)
     ● GOBIN -> go install 安装的二进制文件存放路径
-◼ 二、模块管理(Go Modules)
+◼ 模块管理(Go Modules)
     ● GO111MODULE -> 控制 Go Modules 模式：on(强制启用)、off(禁用)、auto(自动)
     ● GOPROXY -> 模块代理服务器地址(加速依赖下载)
     ● GOPRIVATE -> 私有模块路径(不通过代理和校验数据库)
@@ -11,20 +11,38 @@
     ● GONOSUMDB	-> 指定不校验哈希的模块路径
     ● GOSUMDB -> 校验和数据库地址(默认 sum.golang.org)
     ● GOINSECURE -> 允许通过 HTTP 下载的模块路径
-◼ 三、编译构建
+◼ 编译构建
     ● GOOS -> 目标操作系统(交叉编译)
     ● GOARCH -> 目标 CPU 架构(交叉编译)
     ● CGO_ENABLED -> 是否启用 CGO(1 启用，0 禁用)
     ● CC/CXX -> 指定 C/C++ 编译器(用于 CGO)
     ● GOEXE -> 指定生成的可执行文件后缀(如 Windows 的 .exe)
     ● GOMODCACHE -> 模块缓存目录(存放下载的依赖包)
-◼ 四、测试与调试
+◼ 测试与调试
     ● GOFLAGS -> 为 go 命令设置默认参数
     ● GODEBUG -> 启用调试功能(如内存、GC 行为)
     ● GOTRACEBACK -> 控制程序崩溃时的堆栈信息级别
     ● GOTESTTIMEOUT -> 设置测试超时时间(Go 1.20+)
-◼ 五、其他实用变量
+◼ 其他实用变量
     ● GOMAXPROCS -> 设置程序可用的最大 CPU 核心数
     ● GOWORK -> 启用工作区模式(多模块开发，Go 1.18+)
     ● GOTOOLCHAIN -> 指定使用的 Go 工具链版本
     ● GO_EXTLINK_ENABLED -> 控制是否使用外部链接器(CGO)
+
+
+2. Go 语言中常用的命令行工具及详细说明，涵盖开发、构建、测试、依赖管理等核心场景
+◼ 项目初始化与依赖管理
+    ● go mod init <模块名> => 初始化 Go 模块(创建 go.mod 文件)
+    ● go mod tidy => 自动添加缺失的依赖，删除未使用的依赖
+    ● go get <包路径> => 下载并安装依赖包
+    ● go get -u <包路径> => 更新依赖到最新版本
+    ● go list -m all => 查看当前项目的所有依赖
+    ● go list -json <包路径>	 => 查看包的详细信息(JSON 格式)
+◼ 编译与运行
+    ● go run <文件> => 直接运行 Go 文件(不生成二进制)
+    ● go build => 编译当前目录的代码，生成可执行文件(默认输出到当前目录)
+    ● go build -o <输出名> => 指定输出文件名
+    ● go install => 编译并安装到 $GOPATH/bin
+    ● go clean => 清理编译生成的文件(如可执行文件、临时文件)
+    ● go env => 查看所有 Go 环境变量
+    ● go version => 查看 Go 版本
