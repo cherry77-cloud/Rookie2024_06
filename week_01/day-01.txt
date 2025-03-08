@@ -16,7 +16,7 @@
     ● GOARCH -> 目标 CPU 架构(交叉编译)
     ● CGO_ENABLED -> 是否启用 CGO(1 启用，0 禁用)
     ● CC/CXX -> 指定 C/C++ 编译器(用于 CGO)
-    ● GOEXE	-> 指定生成的可执行文件后缀(如 Windows 的 .exe)
+    ● GOEXE -> 指定生成的可执行文件后缀(如 Windows 的 .exe)
     ● GOMODCACHE -> 模块缓存目录(存放下载的依赖包)
 ◼ 四、测试与调试
     ● GOFLAGS -> 为 go 命令设置默认参数
