@@ -125,7 +125,7 @@ func main() {
 }
 ```
 
-### 一、字符类型
+### 七、字符类型
 
 #### 1. 字符定义
 - 组成字符串的元素称为“字符”，用单引号 `'` 包裹。
@@ -157,7 +157,7 @@ func traversalString() {
 }
 ```
 
-#### 2、字符串修改
+#### 2. 字符串修改
 - 字符串是不可变的，修改需先转换为 `[]byte` 或 `[]rune`，再转回 `string`
 ```
 func changeString() {
@@ -179,3 +179,33 @@ func changeString() {
 - 字符串遍历：推荐使用 `rune` 遍历，避免多字节字符乱码。
 - 字符串修改：需转换为 `[]byte` 或 `[]rune`，修改后再转回 `string`。
 - `Go` 语言字符串是不可变的，修改字符串会重新分配内存。使用 `rune` 处理 `Unicode` 字符更安全
+
+### 八、类型转换规则
+
+- `Go` 语言中只有**强制类型转换**，没有隐式类型转换。
+- 语法：`T(表达式)`，其中 `T` 是目标类型，表达式可以是变量、复杂算子或函数返回值等。
+
+```go
+var a int = 42
+var b float64 = float64(a)  // 将 int 转换为 float64
+var c int = int(b)          // 将 float64 转换为 int
+```
+
+- 当函数参数类型与变量类型不匹配时，需进行强制类型转换。
+```go
+package main
+import (
+    "fmt"
+    "math"
+)
+
+func sqrtDemo() {
+    var a, b = 3, 4
+    var c int
+    // math.Sqrt() 接收 float64 类型参数，需强制转换
+    c = int(math.Sqrt(float64(a*a + b*b)))
+    fmt.Println(c)  // 输出: 5
+}
+```
+
+- `Go` 语言的类型转换是显式的，编译器会严格检查类型兼容性，避免隐式转换带来的潜在问题
