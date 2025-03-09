@@ -45,3 +45,83 @@ func timezoneDemo() {
     fmt.Println(timeInUTC.Equal(sameTimeInNewYork)) // true
 }
 ```
+- 时区信息在时间处理中非常重要，尤其是在跨时区应用中。
+- `time.LoadLocation` 依赖于系统的时区数据库，如果系统没有安装时区数据库，可能会导致加载失败。
+- 在不明确程序运行环境的情况下，建议使用 `time.FixedZone` 来定义时区偏移量，避免依赖系统时区数据库。
+---
+
+### 3. Unix 时间
+`Unix` 时间是从 1970 年 1 月 1 日 `00:00:00 UTC` 开始计算的秒数。`Go` 语言提供了多种方法获取 `Unix` 时间戳：
+- `Unix()`：秒级时间戳。
+- `UnixMilli()`：毫秒级时间戳
+- `UnixMicro()`：微秒级时间戳
+- `UnixNano()`：纳秒级时间戳
+```go
+func timestampDemo() {
+    now := time.Now()
+    fmt.Println(now.Unix())      // 秒级时间戳
+    fmt.Println(now.UnixMilli()) // 毫秒级时间戳
+    fmt.Println(now.UnixMicro()) // 微秒级时间戳
+    fmt.Println(now.UnixNano())  // 纳秒级时间戳
+}
+
+func timestamp2Time() {
+    t := time.Date(2022, 02, 22, 22, 22, 22, 22, time.UTC)
+    sec := t.Unix()
+    msec := t.UnixMilli()
+    usec := t.UnixMicro()
+
+    fmt.Println(time.Unix(sec, 22))      // 秒级转时间对象
+    fmt.Println(time.UnixMilli(msec))    // 毫秒级转时间对象
+    fmt.Println(time.UnixMicro(usec))    // 微秒级转时间对象
+}
+
+// 时间间隔
+const (
+    Nanosecond  Duration = 1
+    Microsecond          = 1000 * Nanosecond
+    Millisecond          = 1000 * Microsecond
+    Second               = 1000 * Millisecond
+    Minute               = 60 * Second
+    Hour                 = 60 * Minute
+)
+```
+---
+### 4. 时间操作
+```go
+// func (t Time) Add(d Duration) Time：在时间对象上增加一个时间间隔
+func main() {
+    now := time.Now()
+    later := now.Add(time.Hour) // 当前时间加 1 小时
+    fmt.Println(later)
+}
+
+// func (t Time) Sub(u Time) Duration：计算两个时间点之间的差值。
+func main() {
+    t1 := time.Now()
+    t2 := t1.Add(time.Hour)
+    diff := t2.Sub(t1) // 1 小时
+    fmt.Println(diff)
+}
+
+// func (t Time) Equal(u Time) bool：判断两个时间是否相同，考虑时区。
+func main() {
+    t1 := time.Now()
+    t2 := t1.Add(0)
+    fmt.Println(t1.Equal(t2)) // true
+}
+
+// func (t Time) Before(u Time) bool：判断时间 t 是否在时间 u 之前
+func main() {
+    t1 := time.Now()
+    t2 := t1.Add(time.Hour)
+    fmt.Println(t1.Before(t2)) // true
+}
+
+// func (t Time) After(u Time) bool：判断时间 t 是否在时间 u 之后。
+func main() {
+    t1 := time.Now()
+    t2 := t1.Add(-time.Hour)
+    fmt.Println(t1.After(t2)) // true
+}
+```
