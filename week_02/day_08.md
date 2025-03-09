@@ -141,3 +141,34 @@ func main() {
     fmt.Println(f(10, 20)) // 输出：30
 }
 ```
+
+- 回调函数: 函数类型常用于实现回调函数
+- 函数作为返回值: 函数类型可以作为返回值，用于实现工厂模式或策略模式
+
+
+```go
+func calculate(x, y int, op calculation) int {
+    return op(x, y)
+}
+
+func main() {
+    result := calculate(10, 20, add) // 使用 add 函数
+    fmt.Println(result) // 输出：30
+}
+
+func getOperation(op string) calculation {
+    switch op {
+    case "add":
+        return add
+    case "sub":
+        return sub
+    default:
+        return nil
+    }
+}
+
+func main() {
+    op := getOperation("add")
+    fmt.Println(op(10, 20)) // 输出：30
+}
+```
