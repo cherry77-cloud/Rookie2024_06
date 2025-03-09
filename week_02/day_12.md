@@ -184,3 +184,67 @@ func (r reverse) Less(i, j int) bool { return r.Interface.Less(j, i) }  // 重�
 func Reverse(data Interface) Interface { return &reverse{data} }  // 返回 reverse 实例
 ```
 ---
+
+### Go语言空接口
+
+- 空接口是不包含任何方法的接口类型，定义为 interface{}。
+- 由于没有方法约束，任何类型都默认实现了空接口。
+- 空接口变量可以存储任意类型的值（如 int、string、结构体等）。
+- 空接口是Go语言中实现泛型的一种方式。
+
+```go
+var x interface{}  // 声明一个空接口变量
+x = "Hello"        // 存储字符串
+x = 42            // 存储整数
+x = true          // 存储布尔值
+x = Dog{}         // 存储结构体
+```
+
+作为函数参数: 空接口允许函数接收任意类型的参数。
+```go
+func show(a interface{}) {
+    fmt.Printf("类型: %T, 值: %v\n", a, a)
+}
+
+func main() {
+    show("Hello")  // 输出：类型: string, 值: Hello
+    show(42)       // 输出：类型: int, 值: 42
+}
+```
+作为 `map` 的值: 空接口允许 `map` 存储任意类型的值。
+```go
+var studentInfo = make(map[string]interface{})
+studentInfo["name"] = "沙河娜扎"  // 存储字符串
+studentInfo["age"] = 18         // 存储整数
+studentInfo["married"] = false  // 存储布尔值
+fmt.Println(studentInfo)        // 输出：map[name:沙河娜扎 age:18 married:false]
+```
+
+- 空接口允许 `slice`、`array` 等容器存储任意类型的值。
+```go
+var data []interface{}
+data = append(data, "Hello", 42, true)
+fmt.Println(data)  // 输出：[Hello 42 true]
+```
+
+空接口变量由类型信息和值指针组成。运行时通过类型信息动态判断存储的具体类型。
+从空接口中提取具体类型时，需要使用类型断言。
+```go
+var x interface{} = "Hello"
+s, ok := x.(string)  // 断言 x 是否为 string 类型
+if ok {
+    fmt.Println(s)  // 输出：Hello
+}
+
+func checkType(x interface{}) {
+    switch v := x.(type) {
+    case string:
+        fmt.Println("字符串:", v)
+    case int:
+        fmt.Println("整数:", v)
+    default:
+        fmt.Println("未知类型:", v)
+    }
+}
+```
+---
