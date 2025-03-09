@@ -124,3 +124,13 @@ func main() {
     fmt.Println(strings.Join([]string{"a", "b", "c"}, "-")) // 输出: a-b-c
 }
 ```
+
+### 一、字符类型
+
+#### 1. 字符定义
+- 组成字符串的元素称为“字符”，用单引号 `'` 包裹。
+- 示例：
+```go
+var a = '中'  // rune 类型
+var b = 'x'   // byte 类型
+```
