@@ -85,3 +85,20 @@ func main() {
 }
 ```
 ---
+
+### 四、数组操作
+
+- 数组的遍历
+
+```go
+\\ 传统 for 循环
+a := [...]string{"北京", "上海", "广州"}
+for i := 0; i < len(a); i++ {
+    fmt.Println(a[i])
+}
+
+\\ for range 遍历
+for index, value := range a {
+    fmt.Printf("索引:%d 值:%s\n", index, value)
+}
+```
