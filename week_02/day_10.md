@@ -459,3 +459,75 @@ func main() {
 | **结构体继承**      | 通过嵌套匿名结构体指针实现方法共享                                   |
 | **字段可见性**      | 大写公开，小写私有                                                   |
 ---
+
+### 9. 结构体与 JSON 序列化总结
+- 序列化（`结构体 → JSON`）使用 `json.Marshal()` 将结构体转为 `JSON` 字符串。
+- 字段可见性：只有首字母大写的字段（导出字段）才会被序列化。
+- 私有字段：小写开头的字段（如 `name`）无法被 `JSON` 包访问，不会出现在结果中。
+
+```go
+type Student struct {
+    ID     int    `json:"id"`  // 序列化为 "id"
+    Gender string             // 序列化为 "Gender"
+    name   string             // 不会被序列化
+}
+
+// 使用 json.Unmarshal() 将 JSON 字符串解析到结构体。
+// 需提前定义目标结构体的类型，且字段类型需与 JSON 数据匹配。
+jsonStr := `{"id":1,"Gender":"男"}`
+var s Student
+err := json.Unmarshal([]byte(jsonStr), &s)
+```
+---
+### 10. 二、结构体标签（Tag）
+- 自定义序列化时的 JSON 键名（如 json:"id"）。添加元信息，可通过反射机制读取（如 ORM 映射、数据校验）。
+- 使用反引号包裹键值对：`key:"value"`。
+- 多个键值对用空格分隔：`json:"id" validate:"required"`。
+- 严格格式：键值对中 key:"value" 的冒号后不能有空格，否则解析失败。
+```go
+// 正确写法
+type User struct {
+    Name string `json:"name" db:"username"`
+}
+
+// 错误写法（冒号后多空格）
+type User struct {
+    Name string `json: "name"` // 无效 Tag
+}
+```
+---
+### 11. 结构体方法中的 Slice/Map 陷阱
+- 直接赋值 slice 或 map 会共享底层数据，外部修改影响结构体内数据。
+```go
+type Person struct {
+    dreams []string
+}
+
+func (p *Person) SetDreams(dreams []string) {
+    p.dreams = dreams // 浅拷贝，共享底层数组
+}
+
+func main() {
+    data := []string{"吃饭", "睡觉"}
+    p := Person{}
+    p.SetDreams(data)
+    data[1] = "不睡觉" // p.dreams 也会变为 ["吃饭", "不睡觉"]
+}
+```
+使用 copy() 或重新分配内存，避免共享底层数据。
+```go
+func (p *Person) SetDreams(dreams []string) {
+    p.dreams = make([]string, len(dreams))
+    copy(p.dreams, dreams) // 深拷贝，独立数据
+}
+
+func (p *Person) SetHobbies(hobbies map[string]bool) {
+    p.hobbies = make(map[string]bool)
+    for k, v := range hobbies {
+        p.hobbies[k] = v
+    }
+}
+```
+- JSON 序列化: 确保结构体字段为导出字段（首字母大写）。使用 json:"tag" 自定义键名，私有字段自动忽略。
+- 结构体标签: 严格遵循语法格式，避免多余空格。多用途 Tag 可用于数据校验（如 validate:"required"）、数据库映射等场景。
+- Slice/Map 赋值: 默认行为是浅拷贝，需显式深拷贝以保证数据独立性。
