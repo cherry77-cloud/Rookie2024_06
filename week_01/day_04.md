@@ -13,7 +13,7 @@ if 表达式1 {
     分支3
 }
 ```
-
+---
 ```go
 func ifDemo1() {
     score := 65
@@ -35,7 +35,7 @@ if 初始化语句; 条件表达式 {
     // 代码块
 }
 ```
-
+---
 ```go
 func ifDemo2() {
     if score := 65; score >= 90 {  // score 作用域仅限于 if 代码块
@@ -56,7 +56,7 @@ for 初始语句; 条件表达式; 结束语句 {
     循环体
 }
 ```
-
+---
 ```go
 func forDemo() {
     for i := 0; i < 10; i++ {
