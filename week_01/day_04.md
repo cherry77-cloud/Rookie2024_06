@@ -133,3 +133,68 @@ func switchDemo2() {
     }
 }
 ```
+
+- `fallthrough` 穿透
+```go
+switch {
+case s == "a":
+    fmt.Println("a")
+    fallthrough  // 继续执行下一个 case
+case s == "b":
+    fmt.Println("b")  // 会被执行
+}
+```
+
+---
+
+### 四、跳转控制
+
+#### 1. `goto` 语句
+```go
+func gotoDemo2() {
+    for i := 0; i < 10; i++ {
+        for j := 0; j < 10; j++ {
+            if j == 2 {
+                goto breakTag  // 跳转到标签
+            }
+        }
+    }
+breakTag:
+    fmt.Println("结束循环")
+}
+```
+
+#### 2. `break` 与 `continue`
+```go
+// 带标签的 break
+BREAKDEMO:
+for i := 0; i < 10; i++ {
+    break BREAKDEMO  // 直接跳出外层循环
+}
+
+// 带标签的 continue
+CONTINUEDEMO:
+for i := 0; i < 5; i++ {
+    for j := 0; j < 5; j++ {
+        continue CONTINUEDEMO  // 跳到外层循环
+    }
+}
+```
+
+### 关键总结
+
+| 控制结构       | 特点                                                                 |
+|----------------|----------------------------------------------------------------------|
+| `if-else`      | 支持初始化语句，变量作用域限于代码块                                 |
+| `for`          | 可省略初始/结束语句，支持无限循环                                   |
+| `for range`    | 支持数组/切片/字符串/map/通道遍历，Go 1.22+ 支持整数迭代             |
+| `switch-case`  | 支持多值匹配、表达式判断和 `fallthrough` 穿透                       |
+| `goto`         | 需配合标签使用，适合快速跳出多层嵌套                                |
+| `break`        | 可指定标签跳出特定循环                                              |
+| `continue`     | 可指定标签跳过当前循环迭代                                          |
+
+---
+
+- 在 Go 中是语句而非运算符，不能嵌入表达式（如 `a = b++` 非法）
+- 每个 `switch` 语句只能有一个 `default` 分支
+- 遍历数组、切片、字符串、map 和通道时，优先使用 `for range`
