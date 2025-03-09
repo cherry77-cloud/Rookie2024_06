@@ -80,3 +80,31 @@ func someFunc(x string) []int {
 }
 ```
 ---
+### 4. 变量作用域
+
+```go
+package main
+
+import "fmt"
+
+var globalVar = 100 // 全局变量
+
+func main() {
+    fmt.Println(globalVar) // 100
+
+    localVar := 200 // 局部变量
+    fmt.Println(localVar) // 200
+
+    if true {
+        blockVar := 300 // 语句块变量
+        fmt.Println(blockVar) // 300
+    }
+    // fmt.Println(blockVar) // 错误：blockVar 不可见
+}
+```
+| 变量类型     | 作用域范围   | 生命周期         | 特点                                   |
+|--------------|--------------|------------------|----------------------------------------|
+| 全局变量     | 整个包       | 程序运行期间     | 始终存在于内存中                       |
+| 局部变量     | 函数内部     | 函数调用期间     | 函数返回时销毁                         |
+| 语句块变量   | 语句块内部   | 语句块执行期间   | 语句块结束时销毁                       |
+---
