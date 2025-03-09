@@ -200,3 +200,47 @@ fmt.Printf("p6=%#v\n", p6) // 输出：p6=&main.Person{name:"小王子", city:"�
 | 值的列表初始化   | `p := Person{"Alice", "北京", 25}`        | 必须初始化所有字段，顺序与声明一致     |
 | 指针初始化       | `p := &Person{name: "Alice", age: 25}`    | 返回结构体指针，语法简洁               |
 ---
+
+### 6. 构造函数
+```go
+\\ 空结构体是不占用空间的。
+\\ 占位符：实现 Set 数据结构（仅需键，无需值）。
+\\ 信号传递：通过通道传递空结构体作为信号。
+
+var v struct{}
+fmt.Println(unsafe.Sizeof(v)) // 输出：0
+
+ch := make(chan struct{})
+go func() {
+    // 任务完成
+    ch <- struct{}{}
+}()
+```
+模拟面向对象中的构造函数，初始化结构体并返回指针，避免值拷贝开销。
+```go
+type person struct {
+    name string
+    city string
+    age  int8
+}
+
+// 构造函数返回指针
+func newPerson(name, city string, age int8) *person {
+    return &person{
+        name: name,
+        city: city,
+        age:  age,
+    }
+}
+
+// 使用
+p9 := newPerson("张三", "沙河", 90)
+fmt.Printf("%#v\n", p9) // &main.person{name:"张三", city:"沙河", age:90}
+```
+| 知识点           | 关键内容                                                                 |
+|------------------|--------------------------------------------------------------------------|
+| **内存布局**     | 结构体字段连续分配，需注意内存对齐优化                                   |
+| **空结构体**     | 不占内存，用于占位符或信号传递                                           |
+| **循环变量陷阱** | 避免在循环中直接使用临时变量的地址                                       |
+| **构造函数**     | 返回指针以提高性能，避免值拷贝                                           |
+---
