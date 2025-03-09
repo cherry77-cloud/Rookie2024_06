@@ -32,7 +32,7 @@ func main() {
 ```
 ---
 
-#### 3. 判断某个键是否存在
+#### 三. 判断某个键是否存在
 ```go
 value, ok := map[key]
 // 如果 key 存在，ok 为 true，value 为对应的值。
@@ -52,7 +52,7 @@ func main() {
 }
 ```
 ---
-#### 4. map 的遍历
+#### 四. map 的遍历
 ```go
 // 遍历键值对
 func main() {
@@ -82,7 +82,7 @@ func main() {
 ```
 ---
 
-#### 5. 使用 delete() 函数删除键值对
+#### 五. 使用 delete() 函数删除键值对
 ```go
 func main() {
     scoreMap := make(map[string]int)
@@ -99,7 +99,7 @@ func main() {
 ```
 ---
 
-#### 6. 按照指定顺序遍历 map
+#### 六. 按照指定顺序遍历 map
 ```go
 func main() {
     rand.Seed(time.Now().UnixNano()) // 初始化随机数种子
@@ -128,7 +128,7 @@ func main() {
 }
 ```
 ---
-#### 7. 元素为 map 类型的切片
+#### 七. 元素为 map 类型的切片
 ```go
 func main() {
     var mapSlice = make([]map[string]string, 3) // 声明一个切片，元素为 map
@@ -151,7 +151,7 @@ func main() {
 }
 ```
 ---
-#### 8. 值为切片类型的 map
+#### 八. 值为切片类型的 map
 ```go
 func main() {
     var sliceMap = make(map[string][]string, 3) // 声明一个 map，值为切片类型
