@@ -297,3 +297,65 @@ func main() {
 | 捕获变量   | 闭包可以访问和修改外部作用域的变量。                                 |
 | 生命周期   | 捕获的变量会一直存在，直到闭包不再被引用。                           |
 | 应用场景   | 延迟计算、回调函数、工厂模式、状态管理等。                           |
+
+---
+
+### 7. defer语句
+Go 语言中的 `defer` 语句会将其后面跟随的语句进行延迟处理。在 `defer` 归属的函数即将返回时，将延迟处理的语句按 `defer` 定义的逆序进行执行，也就是说，先被 `defer` 的语句最后被执行，最后被 `defer` 的语句，最先被执行。
+
+## 示例
+
+```go
+func main() {
+    fmt.Println("start")
+    defer fmt.Println(1)
+    defer fmt.Println(2)
+    defer fmt.Println(3)
+    fmt.Println("end")
+}
+// start end 3 2 1
+```
+- 由于 `defer` 语句延迟调用的特性，所以 `defer` 语句能非常方便地处理资源释放问题。比如：资源清理、文件关闭、解锁及记录时间等
+- 在 `Go` 语言的函数中 `return` 语句在底层并不是原子操作，它分为给返回值赋值和`RET`指令两步。而`defer`语句执行的时机就在返回值赋值操作后，`RET`指令执行前
+- 返回值 = x -> 运行defer -> RET指令
+
+```go
+func f1() int {
+    x := 5
+    defer func() {
+        x++
+    }()
+    return x
+}
+
+func f2() (x int) {
+    defer func() {
+        x++
+    }()
+    return 5
+}
+
+func f3() (y int) {
+    x := 5
+    defer func() {
+        x++
+    }()
+    return x
+}
+
+func f4() (x int) {
+    defer func(x int) {
+        x++
+    }(x)
+    return 5
+}
+// 函数	返回值	分析
+// f1	5	defer 修改的是局部变量 x，不影响返回值。
+// f2	6	defer 修改的是命名返回值 x，影响返回值。
+// f3	5	defer 修改的是局部变量 x，不影响命名返回值 y。
+// f4	5	defer 函数的参数是值传递，不影响外部的命名返回值 x。
+
+// 在 return 赋值后，RET 指令前执行
+// 如果函数有命名返回值，defer 可以修改返回值
+// defer 函数的参数是值传递，不会影响外部变量
+```
