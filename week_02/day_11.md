@@ -12,7 +12,7 @@ package packagename  // 文件首行声明归属包，包名不必与文件夹�
 命名规则
 - 包名避免使用-符号，建议与功能相关（如utils、logger）。
 - 同一文件夹下的文件必须属于同一包。
-
+---
 ### 二、标识符可见性
 导出规则
 - 首字母大写：标识符对外可见（如变量、函数、结构体字段）。
@@ -33,7 +33,7 @@ type User struct {
     age  int     // 不可导出
 }
 ```
-
+---
 ### 三、包的导入（Import）
 
 ```go
@@ -53,7 +53,7 @@ import (
 - 禁止循环导入：包A导入包B，包B不能反向导入包A。
 - 未使用的包：会触发编译错误。
 - 匿名导入：常用于初始化数据库驱动等场景（如_ "github.com/go-sql-driver/mysql"）。
-
+---
 ### 四、初始化函数 init()
 
 - 无参数、无返回值，不可手动调用。
@@ -67,7 +67,7 @@ var x = 10
 func init() { fmt.Println("init:", x) }
 func main() { fmt.Println("main") }
 ```
-
+---
 ### 五、依赖管理（Go Module）
 - go.mod：定义模块路径、依赖及版本。
 - go.sum：记录依赖的哈希校验值。
