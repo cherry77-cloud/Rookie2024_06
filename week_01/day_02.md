@@ -129,7 +129,6 @@ func main() {
 
 #### 1. 字符定义
 - 组成字符串的元素称为“字符”，用单引号 `'` 包裹。
-- 示例：
 ```go
 var a = '中'  // rune 类型
 var b = 'x'   // byte 类型
@@ -137,8 +136,8 @@ var b = 'x'   // byte 类型
 
 | 类型     | 描述                   | 存储方式      |
 |----------|------------------------|---------------|
-| `byte`   | UTF-8 单字节（ASCII）  | `uint8` 别名  |
-| `rune`   | Unicode 码点           | `int32` 别名  |
+| `byte`   | `UTF-8` 单字节（`ASCII`）  | `uint8` 别名  |
+| `rune`   | `Unicode` 码点           | `int32` 别名  |
 
 ```go
 func traversalString() {
@@ -159,7 +158,7 @@ func traversalString() {
 ```
 
 #### 2、字符串修改
-- 字符串是不可变的，修改需先转换为 []byte 或 []rune，再转回 string
+- 字符串是不可变的，修改需先转换为 `[]byte` 或 `[]rune`，再转回 `string`
 ```
 func changeString() {
     s1 := "big"
@@ -175,8 +174,8 @@ func changeString() {
 ```
 
 #### 3. 总结
-- byte：用于处理 ASCII 字符，存储为 uint8。
-- rune：用于处理 Unicode 字符，存储为 int32。
-- 字符串遍历：推荐使用 rune 遍历，避免多字节字符乱码。
-- 字符串修改：需转换为 []byte 或 []rune，修改后再转回 string。
-- Go 语言字符串是不可变的，修改字符串会重新分配内存。使用 rune 处理 Unicode 字符更安全
+- `byte`：用于处理 `ASCII` 字符，存储为 `uint8`。
+- `rune`：用于处理 `Unicode` 字符，存储为 `int32`。
+- 字符串遍历：推荐使用 `rune` 遍历，避免多字节字符乱码。
+- 字符串修改：需转换为 `[]byte` 或 `[]rune`，修改后再转回 `string`。
+- `Go` 语言字符串是不可变的，修改字符串会重新分配内存。使用 `rune` 处理 `Unicode` 字符更安全
