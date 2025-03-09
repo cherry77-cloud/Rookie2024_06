@@ -134,3 +134,49 @@ func main() {
 var a = '中'  // rune 类型
 var b = 'x'   // byte 类型
 ```
+
+| 类型     | 描述                   | 存储方式      |
+|----------|------------------------|---------------|
+| `byte`   | UTF-8 单字节（ASCII）  | `uint8` 别名  |
+| `rune`   | Unicode 码点           | `int32` 别名  |
+
+```go
+func traversalString() {
+    s := "hello沙河"
+    for i := 0; i < len(s); i++ {   // 按字节遍历
+        fmt.Printf("%v(%c) ", s[i], s[i])
+    }
+    fmt.Println()
+}
+
+func traversalString() {
+    s := "hello沙河"
+    for _, r := range s {           // 按 rune 遍历
+        fmt.Printf("%v(%c) ", r, r)
+    }
+    fmt.Println()
+}
+```
+
+#### 2、字符串修改
+- 字符串是不可变的，修改需先转换为 []byte 或 []rune，再转回 string
+```
+func changeString() {
+    s1 := "big"
+    byteS1 := []byte(s1)
+    byteS1[0] = 'p'
+    fmt.Println(string(byteS1))  // 输出: pig
+
+    s2 := "白萝卜"
+    runeS2 := []rune(s2)
+    runeS2[0] = '红'
+    fmt.Println(string(runeS2))  // 输出: 红萝卜
+}
+```
+
+#### 3. 总结
+- byte：用于处理 ASCII 字符，存储为 uint8。
+- rune：用于处理 Unicode 字符，存储为 int32。
+- 字符串遍历：推荐使用 rune 遍历，避免多字节字符乱码。
+- 字符串修改：需转换为 []byte 或 []rune，修改后再转回 string。
+- Go 语言字符串是不可变的，修改字符串会重新分配内存。使用 rune 处理 Unicode 字符更安全
