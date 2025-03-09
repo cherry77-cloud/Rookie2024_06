@@ -172,3 +172,128 @@ func main() {
     fmt.Println(op(10, 20)) // 输出：30
 }
 ```
+---
+
+### 6. 匿名函数与闭包
+在 Go 语言中，匿名函数和闭包是非常强大的特性。它们允许我们在不定义命名函数的情况下直接使用函数，并且可以捕获和保留外部作用域的变量
+```go
+// 匿名函数是没有函数名的函数，可以直接定义并使用
+func(参数列表) 返回值类型 {
+    // 函数体
+}
+
+// 赋值给变量
+add := func(x, y int) int {
+    return x + y
+}
+fmt.Println(add(10, 20)) // 输出：30
+
+// 立即执行
+func(x, y int) {
+    fmt.Println(x + y)
+}(10, 20) // 输出：30
+
+// 作为回调函数
+func process(numbers []int, callback func(int)) {
+    for _, num := range numbers {
+        callback(num)
+    }
+}
+
+process([]int{1, 2, 3}, func(n int) {
+    fmt.Println(n * 2)
+})
+```
+
+- 闭包是一个函数与其相关的引用环境的组合。简单来说，闭包 = 函数 + 引用环境
+- 闭包可以捕获并保留外部作用域的变量
+- 闭包的生命周期与捕获的变量绑定，即使外部函数执行结束，捕获的变量仍然有效
+
+
+```go
+// 计数器
+func adder() func(int) int {
+    var x int // 外部变量
+    return func(y int) int {
+        x += y // 修改外部变量
+        return x
+    }
+}
+
+func main() {
+    f := adder()
+    fmt.Println(f(10)) // 输出：10
+    fmt.Println(f(20)) // 输出：30
+    fmt.Println(f(30)) // 输出：60
+}
+
+// 带初始值的闭包
+func adder2(base int) func(int) int {
+    return func(y int) int {
+        base += y // 修改外部变量 base
+        return base
+    }
+}
+
+func main() {
+    f := adder2(100)
+    fmt.Println(f(10)) // 输出：110
+    fmt.Println(f(20)) // 输出：130
+}
+
+// 后缀生成器
+func makeSuffixFunc(suffix string) func(string) string {
+    return func(name string) string {
+        if !strings.HasSuffix(name, suffix) {
+            return name + suffix
+        }
+        return name
+    }
+}
+
+func main() {
+    jpgFunc := makeSuffixFunc(".jpg")
+    txtFunc := makeSuffixFunc(".txt")
+    fmt.Println(jpgFunc("test")) // 输出：test.jpg
+    fmt.Println(txtFunc("test")) // 输出：test.txt
+}
+
+// 多闭包共享环境
+func calc(base int) (func(int) int, func(int) int) {
+    add := func(i int) int {
+        base += i
+        return base
+    }
+    sub := func(i int) int {
+        base -= i
+        return base
+    }
+    return add, sub
+}
+
+func main() {
+    add, sub := calc(10)
+    fmt.Println(add(1), sub(2)) // 输出：11 9
+    fmt.Println(add(3), sub(4)) // 输出：12 8
+}
+```
+
+#### 闭包的本质
+- 闭包的本质是函数和其引用环境的组合。它允许函数访问和修改外部作用域的变量，即使外部函数已经执行完毕。
+- 捕获变量：闭包会捕获外部作用域的变量。
+- 生命周期：捕获的变量会一直存在，直到闭包不再被引用。
+- 共享环境：多个闭包可以共享同一个外部变量。
+
+#### 闭包的应用场景
+- 延迟计算：闭包可以延迟计算，直到真正需要时才执行。
+- 回调函数：闭包可以作为回调函数，捕获上下文信息。
+- 工厂模式：闭包可以用于生成特定行为的函数。
+- 状态管理：闭包可以用于封装状态，避免全局变量污染。
+
+| 特性       | 说明                                                                 |
+|------------|----------------------------------------------------------------------|
+| 匿名函数   | 没有函数名的函数，可以直接定义和使用。                               |
+| 闭包       | 函数 + 引用环境，可以捕获和修改外部变量。                            |
+| 捕获变量   | 闭包可以访问和修改外部作用域的变量。                                 |
+| 生命周期   | 捕获的变量会一直存在，直到闭包不再被引用。                           |
+| 应用场景   | 延迟计算、回调函数、工厂模式、状态管理等。                           |
