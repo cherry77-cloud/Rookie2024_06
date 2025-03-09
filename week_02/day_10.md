@@ -244,3 +244,77 @@ fmt.Printf("%#v\n", p9) // &main.person{name:"张三", city:"沙河", age:90}
 | **循环变量陷阱** | 避免在循环中直接使用临时变量的地址                                       |
 | **构造函数**     | 返回指针以提高性能，避免值拷贝                                           |
 ---
+
+### 7. Go 语言方法与接收者
+在 `Go` 语言中，方法（`Method`）是一种作用于特定类型变量的函数。这种特定类型变量称为接收者（`Receiver`）。方法与函数的区别在于，方法属于特定的类型，而函数不属于任何类型。
+1. 方法的定义
+```go
+// 接收者变量：建议使用接收者类型名称首字母的小写（如 p 表示 Person）。
+// 接收者类型：可以是值类型或指针类型。
+// 方法属于类型：方法与特定类型绑定，函数则独立于类型
+func (接收者变量 接收者类型) 方法名(参数列表) (返回参数) {
+    函数体
+}
+type Person struct {
+    name string
+    age  int8
+}
+
+// Dream 方法
+func (p Person) Dream() {
+    fmt.Printf("%s的梦想是学好Go语言！\n", p.name)
+}
+
+func main() {
+    p1 := Person{name: "小王子", age: 25}
+    p1.Dream() // 输出：小王子 的梦想是学好Go语言！
+}
+```
+2. 指针类型的接收者
+```go
+// 接收者为指针类型时，方法可以修改接收者的字段值。修改在方法结束后仍然有效。
+// SetAge 方法（指针接收者）
+func (p *Person) SetAge(newAge int8) {
+    p.age = newAge
+}
+
+func main() {
+    p1 := Person{name: "小王子", age: 25}
+    fmt.Println(p1.age) // 输出：25
+    p1.SetAge(30)
+    fmt.Println(p1.age) // 输出：30
+}
+```
+3. 值类型的接收者
+```go
+// 接收者为值类型时，方法操作的是接收者的副本。
+// 对字段的修改不会影响原接收者。
+// SetAge2 方法（值接收者）
+func (p Person) SetAge2(newAge int8) {
+    p.age = newAge
+}
+
+func main() {
+    p1 := Person{name: "小王子", age: 25}
+    fmt.Println(p1.age) // 输出：25
+    p1.SetAge2(30)
+    fmt.Println(p1.age) // 输出：25（未修改原值）
+}
+```
+4. 任意类型添加方法
+```go
+// 非本地类型不能定义方法：不能为其他包的类型定义方法。
+type MyInt int
+
+// SayHello 方法
+func (m MyInt) SayHello() {
+    fmt.Println("Hello, 我是一个 int。")
+}
+
+func main() {
+    var m1 MyInt
+    m1.SayHello() // 输出：Hello, 我是一个 int。
+    m1 = 100
+    fmt.Printf("%#v  %T\n", m1, m1) // 输出：100  main.MyInt
+}
+```
