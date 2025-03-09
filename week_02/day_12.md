@@ -72,4 +72,42 @@ func MakeSound(s Sayer) { s.Say() }  // 可处理任何实现了 Say() 的类型
 #### 接口实现的本质
 - 接口的实现由 方法集匹配 决定。
 - 类型 X 实现接口 I 的条件：X 的方法集包含 I 的所有方法。
+
+
+```go
+// 值接收者实现接口
+type Mover interface { Move() }
+type Dog struct{}
+func (d Dog) Move() { fmt.Println("Dog moves") }
+
+var d1 Dog     // 值类型
+var m1 Mover = d1  // 合法
+m1.Move()      // 输出：Dog moves
+
+d2 := &Dog{}   // 指针类型
+var m2 Mover = d2  // 合法（Go自动解引用）
+m2.Move()      // 输出：Dog moves
+```
+
+```go
+type Mover interface { Move() }
+
+type Cat struct{}
+
+// 指针接收者实现接口
+func (c *Cat) Move() { fmt.Println("Cat moves") }
+
+c1 := &Cat{}    // 指针类型
+var m1 Mover = c1  // 合法
+m1.Move()       // 输出：Cat moves
+
+var c2 Cat      // 值类型
+var m2 Mover = c2  // 编译错误！
+// 错误信息：Cat does not implement Mover (Move method has pointer receiver)
+```
+
+为什么值类型无法调用指针接收者方法
+- 不可寻址的值无法隐式获取指针
+- 临时值或字面量无法取地址：
+
 ---
