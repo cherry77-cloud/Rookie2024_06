@@ -53,12 +53,12 @@ func main() {
 - **方法一**：指定长度初始化
 ```go
 func main() {
-	var testArray [3]int                        //数组会初始化为int类型的零值
-	var numArray = [3]int{1, 2}                 //使用指定的初始值完成初始化
-	var cityArray = [3]string{"北京", "上海", "深圳"} //使用指定的初始值完成初始化
-	fmt.Println(testArray)                      //[0 0 0]
-	fmt.Println(numArray)                       //[1 2 0]
-	fmt.Println(cityArray)                      //[北京 上海 深圳]
+	var testArray [3]int                                   // 数组会初始化为int类型的零值
+	var numArray = [3]int{1, 2}                            // 使用指定的初始值完成初始化
+	var cityArray = [3]string{"北京", "上海", "深圳"}       // 使用指定的初始值完成初始化
+	fmt.Println(testArray)                                 // [0 0 0]
+	fmt.Println(numArray)                                  // [1 2 0]
+	fmt.Println(cityArray)                                 // [北京 上海 深圳]
 }
 ```
 
@@ -68,11 +68,11 @@ func main() {
 	var testArray [3]int
 	var numArray = [...]int{1, 2}
 	var cityArray = [...]string{"北京", "上海", "深圳"}
-	fmt.Println(testArray)                          //[0 0 0]
-	fmt.Println(numArray)                           //[1 2]
-	fmt.Printf("type of numArray:%T\n", numArray)   //type of numArray:[2]int
-	fmt.Println(cityArray)                          //[北京 上海 深圳]
-	fmt.Printf("type of cityArray:%T\n", cityArray) //type of cityArray:[3]string
+	fmt.Println(testArray)                                   // [0 0 0]
+	fmt.Println(numArray)                                    // [1 2]
+	fmt.Printf("type of numArray:%T\n", numArray)            // type of numArray:[2]int
+	fmt.Println(cityArray)                                   // [北京 上海 深圳]
+	fmt.Printf("type of cityArray:%T\n", cityArray)          // type of cityArray:[3]string
 }
 ```
 
@@ -80,8 +80,8 @@ func main() {
 ```go
 func main() {
 	a := [...]int{1: 1, 3: 5}
-	fmt.Println(a)                  // [0 1 0 5]
-	fmt.Printf("type of a:%T\n", a) //type of a:[4]int
+	fmt.Println(a)                      // [0 1 0 5]
+	fmt.Printf("type of a:%T\n", a)     // type of a:[4]int
 }
 ```
 ---
