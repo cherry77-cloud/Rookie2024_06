@@ -17,7 +17,7 @@ func timeDemo() {
     fmt.Println(year, month, day, hour, minute, second)
 }
 ```
-
+---
 ### 2. 时区处理
 - `Go` 语言使用 `time.Location` 来表示时区。
 - 时区是根据全球不同地区的经度划分的，中国通常使用东八区（北京时间）。
