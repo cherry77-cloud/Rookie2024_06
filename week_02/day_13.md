@@ -125,3 +125,62 @@ func main() {
     fmt.Println(t1.After(t2)) // true
 }
 ```
+---
+
+### 5. 定时器
+`Go` 语言中使用 `time.Tick(d Duration)` 创建一个定时器，返回一个通道（`channel`），定时器会按照指定的时间间隔发送时间值。定时器常用于定时任务或周期性任务的执行。
+```go
+func tickDemo() {
+    ticker := time.Tick(time.Second) // 定义一个 1 秒间隔的定时器
+    for i := range ticker {
+        fmt.Println(i) // 每秒都会执行的任务
+    }
+}
+```
+---
+### 6. 时间格式化
+```go
+func formatDemo() {
+    now := time.Now()
+    // 24 小时制
+    fmt.Println(now.Format("2006-01-02 15:04:05.000 Mon Jan"))
+    // 12 小时制
+    fmt.Println(now.Format("2006-01-02 03:04:05.000 PM Mon Jan"))
+    // 保留 3 位小数
+    fmt.Println(now.Format("2006/01/02 15:04:05.000"))
+    // 省略末尾可能的 0
+    fmt.Println(now.Format("2006/01/02 15:04:05.999"))
+    // 只格式化时间部分
+    fmt.Println(now.Format("15:04:05"))
+    // 只格式化日期部分
+    fmt.Println(now.Format("2006.01.02"))
+}
+```
+---
+### 7. 时间解析
+`Go` 语言提供了 `time.Parse()` 和 `time.ParseInLocation()` 函数，用于将字符串解析为时间对象。
+```go
+func parseDemo() {
+    timeObj, err := time.Parse("2006/01/02 15:04:05", "2022/10/05 11:25:20")
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    fmt.Println(timeObj) // 2022-10-05 11:25:20 +0000 UTC
+}
+```
+```go
+func parseDemo() {
+    loc, err := time.LoadLocation("Asia/Shanghai")
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    timeObj, err := time.ParseInLocation("2006/01/02 15:04:05", "2022/10/05 11:25:20", loc)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    fmt.Println(timeObj) // 2022-10-05 11:25:20 +0800 CST
+}
+```
