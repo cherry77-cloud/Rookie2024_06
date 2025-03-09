@@ -479,7 +479,7 @@ var s Student
 err := json.Unmarshal([]byte(jsonStr), &s)
 ```
 ---
-### 10. 二、结构体标签（Tag）
+### 10. 结构体标签（Tag）
 - 自定义序列化时的 JSON 键名（如 json:"id"）。添加元信息，可通过反射机制读取（如 ORM 映射、数据校验）。
 - 使用反引号包裹键值对：`key:"value"`。
 - 多个键值对用空格分隔：`json:"id" validate:"required"`。
