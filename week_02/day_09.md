@@ -105,3 +105,58 @@ func main() {
 // var a *int 只是声明了一个指针变量，但没有分配内存。直接解引用未初始化的指针会导致 panic。
 // var b map[string]int 只是声明了一个 map，但没有分配内存。直接对未初始化的 map 赋值会导致 panic。
 ```
+
+#### new 函数
+`new` 用于为值类型（如 `int`, `struct` 等）分配内存，并返回指向该内存的指针。分配的内存会被初始化为该类型的零值。
+```go
+func new(Type) *Type
+// 参数：类型 Type   返回值：指向 Type 类型零值的指针
+
+func main() {
+    a := new(int)    // 分配内存并返回 *int 类型指针
+    b := new(bool)   // 分配内存并返回 *bool 类型指针
+
+    fmt.Printf("%T\n", a) // *int
+    fmt.Printf("%T\n", b) // *bool
+
+    fmt.Println(*a)  // 0（int 的零值）
+    fmt.Println(*b)  // false（bool 的零值）
+}
+
+func main() {
+    var a *int
+    a = new(int)  // 分配内存
+    *a = 10       // 正常赋值
+    fmt.Println(*a) // 输出：10
+}
+```
+
+#### make 函数
+`make` 用于为引用类型（如 `slice`, `map`, `channel`）分配内存并初始化。返回的是初始化后的引用类型，而不是指针。
+```go
+func make(Type, size ...IntegerType) Type
+// 参数：Type：引用类型（slice, map, channel）。size：可选参数，用于指定容量或长度。
+// 返回值：初始化后的引用类型。
+
+func main() {
+    // 初始化 slice
+    s := make([]int, 5)  // 长度为 5 的切片
+    fmt.Println(s)       // [0 0 0 0 0]
+
+    // 初始化 map
+    m := make(map[string]int)  // 初始化 map
+    m["沙河娜扎"] = 100
+    fmt.Println(m)             // map[沙河娜扎:100]
+
+    // 初始化 channel
+    ch := make(chan int, 10)   // 缓冲区大小为 10 的 channel
+    fmt.Println(ch)            // 0xc00001a0c0（channel 的地址）
+}
+```
+
+| 特性          | `new`                          | `make`                          |
+|---------------|--------------------------------|---------------------------------|
+| 适用类型      | 值类型（如 `int`, `struct`）   | 引用类型（如 `slice`, `map`, `channel`） |
+| 返回值        | 指针（`*Type`）                | 初始化后的引用类型（`Type`）    |
+| 初始化        | 分配内存并初始化为零值         | 分配内存并初始化数据结构        |
+| 使用场景      | 需要指针时使用                 | 需要初始化引用类型时使用        |
