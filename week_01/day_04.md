@@ -12,9 +12,8 @@ if 表达式1 {
 } else {
     分支3
 }
-```
----
-```go
+
+
 func ifDemo1() {
     score := 65
     if score >= 90 {
@@ -34,9 +33,7 @@ func ifDemo1() {
 if 初始化语句; 条件表达式 {
     // 代码块
 }
-```
----
-```go
+
 func ifDemo2() {
     if score := 65; score >= 90 {  // score 作用域仅限于 if 代码块
         fmt.Println("A")
@@ -45,7 +42,7 @@ func ifDemo2() {
     }
 }
 ```
-
+---
 
 ### 二、循环结构
 
@@ -55,10 +52,8 @@ func ifDemo2() {
 for 初始语句; 条件表达式; 结束语句 {
     循环体
 }
-```
----
-```go
-func forDemo() {
+
+func forDemo1() {
     for i := 0; i < 10; i++ {
         fmt.Println(i)  // 输出 0~9
     }
@@ -93,8 +88,8 @@ for value := range channel {}
 for i := range 5 {
     fmt.Println(i)  // 输出 0 1 2 3 4
 }
-```go
-
+```
+---
 
 ### 三、多路分支结构
 
@@ -107,5 +102,34 @@ case 值2, 值3:  // 多值匹配
     // 代码块
 default:
     // 默认代码块
+}
+
+func switchDemo1() {
+    finger := 3
+    switch finger {
+    case 3:
+        fmt.Println("中指")  // 输出: 中指
+    default:
+        fmt.Println("无效输入")
+    }
+}
+```
+
+
+- 表达式判断
+```go
+switch {
+case 条件表达式1:
+    // 代码块
+case 条件表达式2:
+    // 代码块
+}
+
+func switchDemo2() {
+    age := 30
+    switch {
+    case age > 25 && age < 35:
+        fmt.Println("好好工作吧")  // 输出
+    }
 }
 ```
