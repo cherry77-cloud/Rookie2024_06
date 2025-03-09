@@ -56,3 +56,27 @@ func show(prefix string, nums ...int) {
     }
 }
 ```
+
+### 3. 返回值
+```go
+// 多返回值
+func swap(x, y int) (int, int) {
+    return y, x
+}
+
+// 命名返回值
+func calc(x, y int) (sum int, sub int) {
+    sum = x + y
+    sub = x - y
+    return  // 自动返回已命名的返回值
+}
+
+// 返回值补充
+func someFunc(x string) []int {
+	if x == "" {
+		return nil // 没必要返回[]int{}
+	}
+	...
+}
+```
+---
