@@ -115,3 +115,72 @@ var m2 Mover = c2  // 编译错误！
 - 指针接收者：接口变量仅接受指针，方法可修改原数据。
 - 优先选择指针接收者当需要修改状态或避免拷贝时
 ---
+
+### 五、Go语言接口与类型的关系总结
+- 一个类型实现多个接口
+```go
+type Sayer interface { Say() }
+type Mover interface { Move() }
+
+type Dog struct{ Name string }
+
+func (d Dog) Say() { fmt.Printf("%s会叫汪汪汪\n", d.Name) }
+func (d Dog) Move() { fmt.Printf("%s会动\n", d.Name) }
+
+var d = Dog{Name: "旺财"}
+var s Sayer = d  // Dog 实现 Sayer 接口
+var m Mover = d  // Dog 实现 Mover 接口
+s.Say()          // 输出：旺财会叫汪汪汪
+m.Move()         // 输出：旺财会动
+```
+
+-多种类型实现同一接口
+```go
+type Mover interface { Move() }
+
+type Dog struct{ Name string }
+func (d Dog) Move() { fmt.Printf("%s会跑\n", d.Name) }
+
+type Car struct{ Brand string }
+func (c Car) Move() { fmt.Printf("%s速度70迈\n", c.Brand) }
+
+var obj Mover
+obj = Dog{Name: "旺财"}  // Dog 实现 Mover 接口
+obj.Move()               // 输出：旺财会跑
+
+obj = Car{Brand: "宝马"}  // Car 实现 Mover 接口
+obj.Move()                // 输出：宝马速度70迈
+```
+- 接口方法的组合实现: 一个接口的所有方法不一定由一个类型完全实现，可以通过嵌入其他类型来实现部分方法。
+```go
+type WashingMachine interface { wash(); dry() }
+
+type dryer struct{}
+func (d dryer) dry() { fmt.Println("甩一甩") }
+
+type haier struct { dryer }  // 嵌入 dryer 类型
+func (h haier) wash() { fmt.Println("洗刷刷") }
+
+var wm WashingMachine = haier{}
+wm.wash()  // 输出：洗刷刷
+wm.dry()   // 输出：甩一甩
+```
+- 接口嵌套形成新接口
+```go
+type Reader interface { Read(p []byte) (n int, err error) }
+type Writer interface { Write(p []byte) (n int, err error) }
+type Closer interface { Close() error }
+
+type ReadWriter interface { Reader; Writer }  // 组合 Reader 和 Writer
+type ReadCloser interface { Reader; Closer }  // 组合 Reader 和 Closer
+```
+- 接口作为结构体字段: 结构体可以嵌入接口类型，从而间接实现接口，并可以重写接口方法
+```go
+type Interface interface { Len() int; Less(i, j int) bool; Swap(i, j int) }
+
+type reverse struct { Interface }  // 嵌入 Interface 接口
+func (r reverse) Less(i, j int) bool { return r.Interface.Less(j, i) }  // 重写 Less 方法
+
+func Reverse(data Interface) Interface { return &reverse{data} }  // 返回 reverse 实例
+```
+---
