@@ -69,5 +69,74 @@ type Person struct {
     age        int8
 }
 ```
-
+---
 ### 4. 结构体实例化
+在 `Go` 语言中，结构体实例化是为结构体分配内存并初始化其字段的过程。只有实例化后，才能使用结构体的字段。以下是结构体实例化的几种方式及其详细说明。
+```go
+// var 结构体实例 结构体类型
+type Person struct {
+    name string
+    city string
+    age  int8
+}
+
+func main() {
+    var p1 Person
+    p1.name = "沙河娜扎"
+    p1.city = "北京"
+    p1.age = 18
+    fmt.Printf("p1=%v\n", p1)  // 输出：p1={沙河娜扎 北京 18}
+    fmt.Printf("p1=%#v\n", p1) // 输出：p1=main.Person{name:"沙河娜扎", city:"北京", age:18}
+}
+// 使用 . 访问结构体字段。未显式初始化的字段会被赋予其类型的零值
+```
+匿名结构体
+```go
+// 匿名结构体是一种临时定义的结构体类型，无需提前声明
+// 适用于临时数据结构。无法复用，每次使用时需重新定义
+func main() {
+    var user struct {
+        Name string
+        Age  int
+    }
+    user.Name = "小王子"
+    user.Age = 18
+    fmt.Printf("%#v\n", user) // 输出：struct { Name string; Age int }{Name:"小王子", Age:18}
+}
+```
+创建指针类型结构体
+```go
+// 使用 new 关键字实例化结构体，返回结构体的指针：
+var p2 = new(结构体类型)
+func main() {
+    var p2 = new(Person)
+    fmt.Printf("%T\n", p2)     // 输出：*main.Person
+    fmt.Printf("p2=%#v\n", p2) // 输出：p2=&main.Person{name:"", city:"", age:0}
+
+    p2.name = "小王子"
+    p2.age = 28
+    p2.city = "上海"
+    fmt.Printf("p2=%#v\n", p2) // 输出：p2=&main.Person{name:"小王子", city:"上海", age:28}
+}
+// new 返回的是结构体的指针。可以直接通过指针访问字段（Go 语言自动解引用）
+```
+取结构体的地址实例化
+```go
+func main() {
+    p3 := &Person{}
+    fmt.Printf("%T\n", p3)     // 输出：*main.Person
+    fmt.Printf("p3=%#v\n", p3) // 输出：p3=&main.Person{name:"", city:"", age:0}
+
+    p3.name = "七米"
+    p3.age = 30
+    p3.city = "成都"
+    fmt.Printf("p3=%#v\n", p3) // 输出：p3=&main.Person{name:"七米", city:"成都", age:30}
+}
+```
+| 实例化方式       | 语法                          | 返回值类型       | 特点                                   |
+|------------------|-------------------------------|------------------|----------------------------------------|
+| 基本实例化       | `var p1 Person`               | 结构体实例       | 直接分配内存，字段需手动初始化         |
+| 匿名结构体       | `var user struct{...}`        | 结构体实例       | 临时使用，无需提前定义类型             |
+| 指针实例化       | `var p2 = new(Person)`        | 结构体指针       | 返回指针，自动初始化为零值             |
+| 取地址实例化     | `p3 := &Person{}`             | 结构体指针       | 语法糖，底层等价于 `new`               |
+---
