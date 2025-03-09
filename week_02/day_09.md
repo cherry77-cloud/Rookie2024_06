@@ -88,3 +88,20 @@ func main() {
 | 使用场景                     | 需直接操作内存或跨函数修改变量 | 动态数据结构，无需关注底层细节        |
 
 ---
+
+### 4. Go 语言中的 new 和 make
+在 `Go` 语言中，`new` 和 `make` 是两个用于分配内存的内置函数。它们的主要区别在于适用的数据类型和初始化方式
+```go
+func main() {
+    var a *int
+    *a = 100  // 错误：a 未初始化，无法解引用
+    fmt.Println(*a)
+
+    var b map[string]int
+    b["沙河娜扎"] = 100  // 错误：b 未初始化，无法直接使用
+    fmt.Println(b)
+}
+
+// var a *int 只是声明了一个指针变量，但没有分配内存。直接解引用未初始化的指针会导致 panic。
+// var b map[string]int 只是声明了一个 map，但没有分配内存。直接对未初始化的 map 赋值会导致 panic。
+```
