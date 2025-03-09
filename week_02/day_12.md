@@ -185,7 +185,7 @@ func Reverse(data Interface) Interface { return &reverse{data} }  // 返回 reve
 ```
 ---
 
-### Go语言空接口
+### 六、Go语言空接口
 
 - 空接口是不包含任何方法的接口类型，定义为 interface{}。
 - 由于没有方法约束，任何类型都默认实现了空接口。
