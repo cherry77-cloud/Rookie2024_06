@@ -17,3 +17,43 @@ type Writer interface {
 - 方法签名必须完全匹配（方法名、参数、返回值）。
 - 隐式实现：无需显式声明实现接口，只要类型包含接口所有方法即视为实现。
 - 当方法名首字母是大写且这个接口类型名首字母也是大写时，这个方法可以被接口所在的包（`package`）之外的代码访问。
+---
+
+### 二、接口的实现
+- 类型只需实现接口中所有方法，无需显式关联接口。
+- 接口变量可存储任意实现该接口的具体类型实例。
+```go
+type Singer interface { Sing() }
+
+type Bird struct{}
+func (b Bird) Sing() { fmt.Println("鸟鸣") }  // Bird 实现 Singer 接口
+
+var s Singer
+s = Bird{}  // 接口变量指向 Bird 实例
+s.Sing()    // 输出：鸟鸣
+```
+---
+
+### 三、接口的应用场景
+抽象通用行为: 处理多种类型但行为一致的操作（如支付、日志输出）。
+
+```go
+type Payer interface { Pay(amount int64) }
+
+type Alipay struct{}
+func (a Alipay) Pay(amount int64) { fmt.Println("支付宝支付") }
+
+type WeChat struct{}
+func (w WeChat) Pay(amount int64) { fmt.Println("微信支付") }
+
+func Checkout(p Payer) { p.Pay(100) }  // 统一处理支付
+```
+
+解耦代码: 函数参数使用接口类型，无需依赖具体实现，提升扩展性。
+
+```go
+type Sayer interface { Say() }
+
+func MakeSound(s Sayer) { s.Say() }  // 可处理任何实现了 Say() 的类型
+```
+---
