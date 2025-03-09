@@ -56,7 +56,7 @@ func show(prefix string, nums ...int) {
     }
 }
 ```
-
+---
 ### 3. 返回值
 ```go
 // 多返回值
