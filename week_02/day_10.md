@@ -46,3 +46,28 @@ func main() {
 | **类型转换**       | 需显式转换（`NewType(value)`）         | 无需转换，直接使用原类型              |
 | **适用场景**       | 扩展类型功能，定义领域特定类型         | 代码兼容性、简化复杂类型名称          |
 ---
+
+### 3. 结构体
+在 `Go` 语言中，结构体（`struct`）是一种自定义的复合数据类型，用于封装多个不同类型的字段。结构体可以用来描述一组相关的属性，非常适合表示复杂的数据结构。
+```go
+// 使用 type 和 struct 关键字定义结构体
+type 类型名 struct {
+    字段名 字段类型
+    字段名 字段类型
+    …
+}
+
+type Person struct {
+    name string
+    city string
+    age  int8
+}
+
+// 相同类型的字段可以写在一行
+type Person struct {
+    name, city string
+    age        int8
+}
+```
+
+### 4. 结构体实例化
