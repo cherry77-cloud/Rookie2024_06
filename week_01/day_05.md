@@ -88,7 +88,7 @@ func main() {
 
 ### 四、数组操作
 
-- 数组的遍历
+#### 1. 数组的遍历
 
 ```go
 \\ 传统 for 循环
@@ -100,5 +100,31 @@ for i := 0; i < len(a); i++ {
 \\ for range 遍历
 for index, value := range a {
     fmt.Printf("索引:%d 值:%s\n", index, value)
+}
+```
+
+#### 2. 多维数组
+```go
+// 二维数组（3行2列）
+matrix := [3][2]string{
+    {"A1", "A2"},
+    {"B1", "B2"},
+    {"C1", "C2"},
+}
+fmt.Println(matrix[1][0])  // 输出: B1
+
+// 自动推断第一维长度
+autoMatrix := [...][2]int{
+    {1, 2},
+    {3, 4},
+}  // 类型为 [2][2]int
+
+
+// 遍历多维数组
+for _, row := range matrix {
+    for _, val := range row {
+        fmt.Printf("%s\t", val)
+    }
+    fmt.Println()
 }
 ```
