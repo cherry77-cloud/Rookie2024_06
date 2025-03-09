@@ -248,3 +248,41 @@ func checkType(x interface{}) {
 }
 ```
 ---
+
+### 七、Go语言接口值的比较机制详解
+接口值由动态类型（Type）和动态值（Value）两部分组成：
+- 动态类型：接口变量实际存储的值的类型（如 *Dog、*Car）。
+- 动态值：接口变量实际存储的值的副本或指针。
+
+```go
+// 两个接口值相等需满足：动态类型相同  动态值相等（根据具体类型的比较规则）
+// 如果动态类型 不可比较（如 slice、map、func），则比较操作会触发 panic。
+// 即使两个接口值指向同一个变量，若动态类型不可比较，也无法安全比较。
+var x Mover = &Dog{Name: "旺财"}
+var y Mover = &Dog{Name: "旺财"}
+fmt.Println(x == y) // 输出：false（指针地址不同）
+```
+
+接口值的比较依赖于动态类型的可比较性
+- 若动态类型本身支持比较（如 `int`、`string`、指针），则接口值可安全比较。
+- 若动态类型不可比较（如 `slice`），则比较接口值会引发 `panic`。
+- 即使两个接口值的动态类型相同（如 *Dog），若它们的动态值（指针地址）不同，比较结果为 `false`。
+
+```go
+// 切片是引用类型，底层包含指向数组的指针、长度和容量。
+// Go 语言中切片不可直接比较（无法通过 == 判断内容是否相同）。
+// 当比较 z == z 时，Go会尝试比较动态值（即 []int{1,2,3}）。由于切片类型 []int 不可比较，触发运行时 panic。
+var z interface{} = []int{1, 2, 3}
+fmt.Println(z == z) // panic: comparing uncomparable type []int
+```
+
+`nil` 接口值的特殊情况
+- 只有接口值的动态类型和动态值均为 `nil` 时，接口值才等于 `nil`
+```go
+var m Mover  // 动态类型和值均为 nil
+fmt.Println(m == nil) // true
+
+var c *Car
+m = c        // 动态类型为 *Car，动态值为 nil
+fmt.Println(m == nil) // false
+```
