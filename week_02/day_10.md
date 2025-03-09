@@ -326,3 +326,136 @@ func main() {
 | **任意类型方法**     | 可以为自定义类型添加方法，但不能为非本地类型定义方法                     |
 | **构造函数**         | 返回指针以提高性能，避免值拷贝                                           |
 ---
+
+### 8. 结构体的匿名字段
+- 匿名字段是指没有显式字段名，直接使用类型作为字段名的结构体成员。
+- **字段名默认使用类型名**，同类型匿名字段只能有一个。
+1. 匿名结构体
+```go
+type Person struct {
+    string // 字段名为 string
+    int    // 字段名为 int
+}
+
+func main() {
+    p1 := Person{"北京", 18}
+    fmt.Println(p1.string, p1.int) // 输出：北京 18
+}
+```
+2. 嵌套结构体
+```go
+// 一个结构体可以嵌套其他结构体或结构体指针，形成复合数据结构
+type Address struct {
+    Province string
+    City     string
+}
+
+type User struct {
+    Name   string
+    Gender string
+    Addr   Address // 显式嵌套
+}
+
+func main() {
+    user1 := User{
+        Name:   "小王子",
+        Gender: "男",
+        Addr:   Address{Province: "山东", City: "威海"},
+    }
+    fmt.Println(user1.Addr.City) // 输出：威海
+}
+```
+3. 嵌套匿名字段
+```go
+// 嵌套的结构体可以声明为匿名字段，直接通过外层结构体访问其字段
+type User struct {
+    Name    string
+    Gender  string
+    Address // 匿名字段（类型名 Address 作为字段名）
+}
+
+func main() {
+    user2 := User{
+        Name:   "小王子",
+        Gender: "男",
+        Address: Address{Province: "山东", City: "威海"},
+    }
+    // 直接访问嵌套字段
+    fmt.Println(user2.Province) // 输出：山东（等价于 user2.Address.Province）
+}
+```
+4. 字段名冲突
+```go
+// 当嵌套的多个结构体存在同名字段时，直接访问会导致歧义。显式指定内嵌结构体的字段名。
+type Address struct {
+    CreateTime string
+}
+
+type Email struct {
+    CreateTime string
+}
+
+type User struct {
+    Address
+    Email
+}
+
+func main() {
+    user3 := User{}
+    user3.Address.CreateTime = "2000" // 指定 Address 的字段
+    user3.Email.CreateTime = "2000"   // 指定 Email 的字段
+}
+```
+5. 结构体的“继承”
+```go
+// 通过嵌套匿名结构体指针，共享方法和字段。
+type Animal struct {
+    name string
+}
+
+func (a *Animal) Move() {
+    fmt.Printf("%s会动！\n", a.name)
+}
+
+type Dog struct {
+    Feet   int8
+    *Animal // 匿名嵌套结构体指针
+}
+
+func (d *Dog) Bark() {
+    fmt.Printf("%s会汪汪汪~\n", d.name) // 直接访问 Animal 的字段
+}
+
+func main() {
+    d1 := &Dog{
+        Feet: 4,
+        Animal: &Animal{name: "乐乐"},
+    }
+    d1.Bark() // 输出：乐乐会汪汪汪~
+    d1.Move() // 输出：乐乐会动！
+}
+```
+6. 结构体字段的可见性
+```go
+// 大写开头：字段可被其他包访问（公开）。
+// 小写开头：字段仅在当前包内访问（私有）。
+// 在包 A 中定义
+type Student struct {
+    Name string // 公开字段
+    age  int    // 私有字段
+}
+
+// 在包 B 中导入包 A
+func main() {
+    s := a.Student{Name: "Alice"}
+    // s.age = 20 // 错误：无法访问私有字段
+}
+```
+| 特性                | 说明                                                                 |
+|---------------------|----------------------------------------------------------------------|
+| **匿名字段**        | 使用类型名作为字段名，同类型只能有一个                               |
+| **嵌套结构体**      | 支持显式和匿名嵌套，直接访问嵌套字段                                 |
+| **字段冲突**        | 通过显式指定内嵌结构体名称解决                                       |
+| **结构体继承**      | 通过嵌套匿名结构体指针实现方法共享                                   |
+| **字段可见性**      | 大写公开，小写私有                                                   |
+---
