@@ -108,3 +108,36 @@ func main() {
 | 局部变量     | 函数内部     | 函数调用期间     | 函数返回时销毁                         |
 | 语句块变量   | 语句块内部   | 语句块执行期间   | 语句块结束时销毁                       |
 ---
+
+### 5. 函数类型与变量
+在 Go 语言中，函数是一等公民，这意味着函数可以像普通变量一样被赋值、传递和返回。通过定义函数类型，我们可以将函数抽象为一种类型，从而更方便地使用函数。
+```go
+// type 函数类型名 func(参数列表) 返回值类型
+type calculation func(int, int) int
+// 该类型的函数接收两个 int 类型的参数，并返回一个 int 类型的值
+
+// 加法函数
+func add(x, y int) int {
+    return x + y
+}
+
+// 减法函数
+func sub(x, y int) int {
+    return x - y
+}
+
+var c calculation      // 声明一个 calculation 类型的变量 c
+c = add                // 将 add 函数赋值给 c
+fmt.Println(c(1, 2))   // 调用 c，输出：3
+
+func main() {
+    var c calculation // 声明一个 calculation 类型的变量 c
+    c = add           // 将 add 函数赋值给 c
+    fmt.Printf("type of c: %T\n", c) // 输出：type of c: main.calculation
+    fmt.Println(c(1, 2)) // 输出：3
+
+    f := add // 将 add 函数赋值给变量 f
+    fmt.Printf("type of f: %T\n", f) // 输出：type of f: func(int, int) int
+    fmt.Println(f(10, 20)) // 输出：30
+}
+```
