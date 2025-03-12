@@ -1,7 +1,7 @@
-### Go 语言中的 map
+## `Go` 语言中的 `map`
 `map` 是 `Go` 语言中提供的一种基于键值对(`key-value`)的无序集合，其内部通过散列表(`hash table`)实现。`map` 是引用类型，必须初始化后才能使用
 
-#### 一. map 的定义
+### 一. `map` 的定义
 ```go
 // KeyType：键的类型   ValueType：值的类型
 map[KeyType]ValueType
@@ -11,7 +11,7 @@ make(map[KeyType]ValueType, [cap])
 // cap：可选参数，表示 map 的初始容量。
 ```
 ---
-#### 二. map 的基本使用
+### 二. `map` 的基本使用
 ```go
 func main() {
     scoreMap := make(map[string]int, 8)
@@ -32,7 +32,7 @@ func main() {
 ```
 ---
 
-#### 三. 判断某个键是否存在
+### 三. 判断某个键是否存在
 ```go
 value, ok := map[key]
 // 如果 key 存在，ok 为 true，value 为对应的值。
@@ -52,7 +52,7 @@ func main() {
 }
 ```
 ---
-#### 四. map 的遍历
+### 四. `map` 的遍历
 ```go
 // 遍历键值对
 func main() {
@@ -82,7 +82,7 @@ func main() {
 ```
 ---
 
-#### 五. 使用 delete() 函数删除键值对
+### 五. 使用 `delete()` 函数删除键值对
 ```go
 func main() {
     scoreMap := make(map[string]int)
@@ -99,7 +99,7 @@ func main() {
 ```
 ---
 
-#### 六. 按照指定顺序遍历 map
+### 六. 按照指定顺序遍历 `map`
 ```go
 func main() {
     rand.Seed(time.Now().UnixNano()) // 初始化随机数种子
@@ -128,7 +128,7 @@ func main() {
 }
 ```
 ---
-#### 七. 元素为 map 类型的切片
+### 七. 元素为 `map` 类型的切片
 ```go
 func main() {
     var mapSlice = make([]map[string]string, 3) // 声明一个切片，元素为 map
@@ -151,7 +151,7 @@ func main() {
 }
 ```
 ---
-#### 八. 值为切片类型的 map
+### 八. 值为切片类型的 `map`
 ```go
 func main() {
     var sliceMap = make(map[string][]string, 3) // 声明一个 map，值为切片类型
