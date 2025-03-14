@@ -11,4 +11,4 @@
 ---
 
 ## Week 02
-- [`day_08` Go 语言中的 map](https://github.com/cherry77-cloud/Rookie2024_06/blob/main/week_01/day_07.md) ✅
+- [`day_08` Go 语言函数详解](https://github.com/cherry77-cloud/Rookie2024_06/blob/main/week_02/day_08.md) ✅
