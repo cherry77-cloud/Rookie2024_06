@@ -105,7 +105,7 @@ func main() {
 // var b map[string]int 只是声明了一个 map，但没有分配内存。直接对未初始化的 map 赋值会导致 panic。
 ```
 
-#### 1. `new` 函数
+#### `new` 函数
 `new` 用于为值类型（如 `int`, `struct` 等）分配内存，并返回指向该内存的指针。分配的内存会被初始化为该类型的零值。
 ```go
 func new(Type) *Type
@@ -130,7 +130,7 @@ func main() {
 }
 ```
 
-#### 2. `make` 函数
+#### `make` 函数
 `make` 用于为引用类型（如 `slice`, `map`, `channel`）分配内存并初始化。返回的是初始化后的引用类型，而不是指针。
 ```go
 func make(Type, size ...IntegerType) Type
