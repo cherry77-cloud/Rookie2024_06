@@ -119,6 +119,7 @@ const (
 
 ### 模块管理（`Go Modules`）
 - **`GO111MODULE`**: 控制 `Go Modules` 模式：
+
   - `on`: 强制启用。
   - `off`: 禁用。
   - `auto`: 自动。
